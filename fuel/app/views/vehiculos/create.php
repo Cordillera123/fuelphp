@@ -3,5 +3,4 @@
 
 <?php echo render('vehiculos/_form'); ?>
 
-
 <p><?php echo Html::anchor('vehiculos', 'Back'); ?></p>

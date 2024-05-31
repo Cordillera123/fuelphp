@@ -5,6 +5,10 @@ class Model_Vehiculo extends Model
 {
 	protected static $_properties = array(
 		'id',
+		'marca',
+		'modelo',
+		'anio',
+		'precio',
 		'created_at',
 		'updated_at',
 	);
@@ -23,6 +27,12 @@ class Model_Vehiculo extends Model
 	public static function validate($factory)
 	{
 		$val = Validation::forge($factory);
+
+		// Add validation rules for each field
+		$val->add_field('marca', 'Marca', 'required|max_length[255]');
+		$val->add_field('modelo', 'Modelo', 'required|max_length[255]');
+		$val->add_field('anio', 'Año', 'required|valid_string[numeric]|exact_length[4]');
+		$val->add_field('precio', 'Precio', 'required|valid_string[numeric]');
 
 		return $val;
 	}

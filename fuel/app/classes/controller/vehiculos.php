@@ -7,7 +7,6 @@ class Controller_Vehiculos extends Controller_Template
 		$data['vehiculos'] = Model_Vehiculo::find('all');
 		$this->template->title = "Vehiculos";
 		$this->template->content = View::forge('vehiculos/index', $data);
-
 	}
 
 	public function action_view($id = null)
@@ -22,7 +21,6 @@ class Controller_Vehiculos extends Controller_Template
 
 		$this->template->title = "Vehiculo";
 		$this->template->content = View::forge('vehiculos/view', $data);
-
 	}
 
 	public function action_create()
@@ -34,15 +32,17 @@ class Controller_Vehiculos extends Controller_Template
 			if ($val->run())
 			{
 				$vehiculo = Model_Vehiculo::forge(array(
+					'marca' => Input::post('marca'),
+					'modelo' => Input::post('modelo'),
+					'anio' => Input::post('anio'),
+					'precio' => Input::post('precio'),
 				));
 
 				if ($vehiculo and $vehiculo->save())
 				{
 					Session::set_flash('success', 'Added vehiculo #'.$vehiculo->id.'.');
-
 					Response::redirect('vehiculos');
 				}
-
 				else
 				{
 					Session::set_flash('error', 'Could not save vehiculo.');
@@ -56,7 +56,6 @@ class Controller_Vehiculos extends Controller_Template
 
 		$this->template->title = "Vehiculos";
 		$this->template->content = View::forge('vehiculos/create');
-
 	}
 
 	public function action_edit($id = null)
@@ -73,25 +72,25 @@ class Controller_Vehiculos extends Controller_Template
 
 		if ($val->run())
 		{
+			$vehiculo->marca = Input::post('marca');
+			$vehiculo->modelo = Input::post('modelo');
+			$vehiculo->anio = Input::post('anio');
+			$vehiculo->precio = Input::post('precio');
 
 			if ($vehiculo->save())
 			{
 				Session::set_flash('success', 'Updated vehiculo #' . $id);
-
 				Response::redirect('vehiculos');
 			}
-
 			else
 			{
 				Session::set_flash('error', 'Could not update vehiculo #' . $id);
 			}
 		}
-
 		else
 		{
 			if (Input::method() == 'POST')
 			{
-
 				Session::set_flash('error', $val->error());
 			}
 
@@ -100,7 +99,6 @@ class Controller_Vehiculos extends Controller_Template
 
 		$this->template->title = "Vehiculos";
 		$this->template->content = View::forge('vehiculos/edit');
-
 	}
 
 	public function action_delete($id = null)
@@ -110,17 +108,13 @@ class Controller_Vehiculos extends Controller_Template
 		if ($vehiculo = Model_Vehiculo::find($id))
 		{
 			$vehiculo->delete();
-
 			Session::set_flash('success', 'Deleted vehiculo #'.$id);
 		}
-
 		else
 		{
 			Session::set_flash('error', 'Could not delete vehiculo #'.$id);
 		}
 
 		Response::redirect('vehiculos');
-
 	}
-
 }

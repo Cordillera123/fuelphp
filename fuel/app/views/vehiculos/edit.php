@@ -2,6 +2,8 @@
 <br>
 
 <?php echo render('vehiculos/_form'); ?>
+
 <p>
 	<?php echo Html::anchor('vehiculos/view/'.$vehiculo->id, 'View'); ?> |
-	<?php echo Html::anchor('vehiculos', 'Back'); ?></p>
+	<?php echo Html::anchor('vehiculos', 'Back'); ?>
+</p>
